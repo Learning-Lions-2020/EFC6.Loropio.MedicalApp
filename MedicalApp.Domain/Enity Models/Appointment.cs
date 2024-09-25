@@ -15,5 +15,6 @@
 
         // Navigation property for Prescription
         public Prescription Prescription { get; set; }
+
     }
 }
