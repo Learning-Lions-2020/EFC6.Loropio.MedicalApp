@@ -1,9 +1,5 @@
 ﻿using MedicalApp.Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -23,12 +19,10 @@ namespace MedicalApp.Data.Repository
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
-            return await _dbSet.ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
             return await _dbSet.FindAsync(id);
         }
 
@@ -36,15 +30,10 @@ namespace MedicalApp.Data.Repository
         {
             await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
-
-            await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(T entity)
         {
-            _dbSet.Update(entity);
-            await _context.SaveChangesAsync();
             _dbSet.Update(entity);
             await _context.SaveChangesAsync();
         }
@@ -55,13 +44,8 @@ namespace MedicalApp.Data.Repository
             if (entity != null)
             {
                 _dbSet.Remove(entity);
-
-                var entity = await _dbSet.FindAsync(id);
-                if (entity != null)
-                {
-                    _dbSet.Remove(entity);
-                    await _context.SaveChangesAsync();
-                }
+                await _context.SaveChangesAsync();
             }
         }
     }
+}
