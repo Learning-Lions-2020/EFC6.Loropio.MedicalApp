@@ -16,6 +16,7 @@ namespace MedicalApp.Web.Controllers
             _appointmentRepository = appointmentRepository;
         }
 
+        // GET: api/appointments
         [HttpGet]
         public async Task<IActionResult> GetAllAppointments()
         {
@@ -23,6 +24,7 @@ namespace MedicalApp.Web.Controllers
             return Ok(appointments);
         }
 
+        // GET: api/appointments/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAppointment(int id)
         {
@@ -31,13 +33,31 @@ namespace MedicalApp.Web.Controllers
             return Ok(appointment);
         }
 
+        // POST: api/appointments
         [HttpPost]
         public async Task<IActionResult> AddAppointment([FromBody] Appointment appointment)
         {
+            if (appointment == null)
+            {
+                return BadRequest("Appointment data is null.");
+            }
+
+            // Check if patient and doctor IDs are valid
+            if (appointment.PatientId <= 0)
+            {
+                return BadRequest("Invalid Patient ID.");
+            }
+            if (appointment.DoctorId <= 0)
+            {
+                return BadRequest("Invalid Doctor ID.");
+            }
+
             await _appointmentRepository.AddAsync(appointment);
             return CreatedAtAction(nameof(GetAppointment), new { id = appointment.Id }, appointment);
         }
 
+
+        // PUT: api/appointments/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAppointment(int id, [FromBody] Appointment appointment)
         {
@@ -46,9 +66,13 @@ namespace MedicalApp.Web.Controllers
             return NoContent();
         }
 
+        // DELETE: api/appointments/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppointment(int id)
         {
+            var existingAppointment = await _appointmentRepository.GetByIdAsync(id);
+            if (existingAppointment == null) return NotFound();
+
             await _appointmentRepository.DeleteAsync(id);
             return NoContent();
         }
