@@ -1,5 +1,6 @@
 ﻿using MedicalApp.Domain;
 using MedicalApp.Domain.Contracts;
+using MedicalApp.Domain.Enity_Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -35,26 +36,30 @@ namespace MedicalApp.Web.Controllers
 
         // POST: api/appointments
         [HttpPost]
-        public async Task<IActionResult> AddAppointment([FromBody] Appointment appointment)
+        public async Task<IActionResult> AddAppointment([FromBody] AppointmentDto appointmentDto)
         {
-            if (appointment == null)
+            if (appointmentDto == null)
             {
                 return BadRequest("Appointment data is null.");
             }
 
-            // Check if patient and doctor IDs are valid
-            if (appointment.PatientId <= 0)
+            var appointment = new Appointment
             {
-                return BadRequest("Invalid Patient ID.");
-            }
-            if (appointment.DoctorId <= 0)
-            {
-                return BadRequest("Invalid Doctor ID.");
-            }
+                Date = appointmentDto.Date,
+                PatientId = appointmentDto.PatientId,
+                DoctorId = appointmentDto.DoctorId,
+                Prescription = new Prescription
+                {
+                    Medication = appointmentDto.Prescription.Medication,
+                    Dosage = appointmentDto.Prescription.Dosage
+                }
+            };
 
             await _appointmentRepository.AddAsync(appointment);
             return CreatedAtAction(nameof(GetAppointment), new { id = appointment.Id }, appointment);
         }
+
+
 
 
         // PUT: api/appointments/{id}

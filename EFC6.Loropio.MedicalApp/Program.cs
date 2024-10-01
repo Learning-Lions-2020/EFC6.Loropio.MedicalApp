@@ -22,16 +22,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
-// Register your repositories here
 builder.Services.AddScoped<IRecordsRepository<Patient>, RecordsRepository<Patient>>();
 builder.Services.AddScoped<IRecordsRepository<Doctor>, RecordsRepository<Doctor>>();
 builder.Services.AddScoped<IRecordsRepository<Appointment>, RecordsRepository<Appointment>>();
 builder.Services.AddScoped<IRecordsRepository<Prescription>, RecordsRepository<Prescription>>();
-builder.Services.AddScoped<IMedicalRepository, MedicalRepository>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");

@@ -47,5 +47,6 @@ namespace MedicalApp.Data.Repository
                 await _context.SaveChangesAsync();
             }
         }
+
     }
 }

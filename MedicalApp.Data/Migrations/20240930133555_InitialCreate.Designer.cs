@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicalApp.Data.Migrations
 {
     [DbContext(typeof(MedicalAppDbContext))]
-    [Migration("20240930074057_UpdateAppointments")]
-    partial class UpdateAppointments
+    [Migration("20240930133555_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,16 +53,30 @@ namespace MedicalApp.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2024, 9, 30, 10, 40, 57, 335, DateTimeKind.Local).AddTicks(83),
+                            Date = new DateTime(2024, 9, 30, 16, 35, 55, 634, DateTimeKind.Local).AddTicks(4212),
                             DoctorId = 1,
                             PatientId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2024, 10, 1, 10, 40, 57, 335, DateTimeKind.Local).AddTicks(92),
+                            Date = new DateTime(2024, 10, 1, 16, 35, 55, 634, DateTimeKind.Local).AddTicks(4224),
                             DoctorId = 2,
                             PatientId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Date = new DateTime(2024, 10, 2, 16, 35, 55, 634, DateTimeKind.Local).AddTicks(4227),
+                            DoctorId = 3,
+                            PatientId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Date = new DateTime(2024, 10, 3, 16, 35, 55, 634, DateTimeKind.Local).AddTicks(4229),
+                            DoctorId = 4,
+                            PatientId = 4
                         });
                 });
 
@@ -94,28 +108,28 @@ namespace MedicalApp.Data.Migrations
                             Id = 1,
                             Address = "Berlin, Germany",
                             DateOfBirth = new DateTime(1980, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Dr Thomas"
+                            Name = "Dr. Thomas"
                         },
                         new
                         {
                             Id = 2,
                             Address = "Nairobi, Kenya",
                             DateOfBirth = new DateTime(1975, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Dr Jerry"
+                            Name = "Dr. Jerry"
                         },
                         new
                         {
                             Id = 3,
                             Address = "Kampala, Uganda",
-                            DateOfBirth = new DateTime(1975, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Dr Boniface"
+                            DateOfBirth = new DateTime(1972, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Dr. Boniface"
                         },
                         new
                         {
                             Id = 4,
                             Address = "Juba, South Sudan",
-                            DateOfBirth = new DateTime(1975, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Dr Olsen"
+                            DateOfBirth = new DateTime(1978, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Dr. Olsen"
                         });
                 });
 
@@ -160,14 +174,14 @@ namespace MedicalApp.Data.Migrations
                         {
                             Id = 3,
                             Address = "789 Pine St",
-                            DateOfBirth = new DateTime(1995, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1996, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Alice Makeke"
                         },
                         new
                         {
                             Id = 4,
-                            Address = "Kanamkemer str",
-                            DateOfBirth = new DateTime(1995, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Address = "Kanamkemer Str",
+                            DateOfBirth = new DateTime(1992, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Kuya Nacho"
                         });
                 });
@@ -201,15 +215,29 @@ namespace MedicalApp.Data.Migrations
                         {
                             Id = 1,
                             AppointmentId = 1,
-                            Dosage = "10mg",
-                            Medication = "Medication A"
+                            Dosage = "500 mg",
+                            Medication = "Amoxicillin"
                         },
                         new
                         {
                             Id = 2,
                             AppointmentId = 2,
-                            Dosage = "20mg",
-                            Medication = "Medication B"
+                            Dosage = "200 mg",
+                            Medication = "Ibuprofen"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AppointmentId = 3,
+                            Dosage = "500 mg",
+                            Medication = "Paracetamol"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AppointmentId = 4,
+                            Dosage = "10 mg",
+                            Medication = "Cetirizine"
                         });
                 });
 
@@ -245,7 +273,8 @@ namespace MedicalApp.Data.Migrations
 
             modelBuilder.Entity("MedicalApp.Domain.Appointment", b =>
                 {
-                    b.Navigation("Prescription");
+                    b.Navigation("Prescription")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MedicalApp.Domain.Doctor", b =>

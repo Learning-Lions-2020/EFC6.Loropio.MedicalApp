@@ -5,15 +5,13 @@
         public int Id { get; set; }
         public DateTime Date { get; set; }
 
-        //Foreign Keys
         public int PatientId { get; set; }
-        public Patient? Patient { get; set; }
+        public Patient Patient { get; set; }
 
         public int DoctorId { get; set; }
-        public Doctor? Doctor { get; set; }
+        public Doctor Doctor { get; set; }
 
-        // Navigation property for Prescription
-        public Prescription? Prescription { get; set; }
+        public Prescription Prescription { get; set; }
 
     }
 }

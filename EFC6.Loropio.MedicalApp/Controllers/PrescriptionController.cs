@@ -16,6 +16,7 @@ namespace MedicalApp.Web.Controllers
             _prescriptionRepository = prescriptionRepository;
         }
 
+        // GET: api/prescriptions
         [HttpGet]
         public async Task<IActionResult> GetAllPrescriptions()
         {
@@ -23,6 +24,7 @@ namespace MedicalApp.Web.Controllers
             return Ok(prescriptions);
         }
 
+        // GET: api/prescriptions/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPrescription(int id)
         {
@@ -31,13 +33,20 @@ namespace MedicalApp.Web.Controllers
             return Ok(prescription);
         }
 
+        // POST: api/prescriptions
         [HttpPost]
         public async Task<IActionResult> AddPrescription([FromBody] Prescription prescription)
         {
+            if (prescription == null)
+            {
+                return BadRequest("Prescription data is null.");
+            }
+
             await _prescriptionRepository.AddAsync(prescription);
             return CreatedAtAction(nameof(GetPrescription), new { id = prescription.Id }, prescription);
         }
 
+        // PUT: api/prescriptions/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePrescription(int id, [FromBody] Prescription prescription)
         {
@@ -46,9 +55,13 @@ namespace MedicalApp.Web.Controllers
             return NoContent();
         }
 
+        // DELETE: api/prescriptions/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePrescription(int id)
         {
+            var existingPrescription = await _prescriptionRepository.GetByIdAsync(id);
+            if (existingPrescription == null) return NotFound();
+
             await _prescriptionRepository.DeleteAsync(id);
             return NoContent();
         }
