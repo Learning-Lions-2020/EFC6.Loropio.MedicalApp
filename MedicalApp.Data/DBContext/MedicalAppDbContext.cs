@@ -31,10 +31,10 @@ public class MedicalAppDbContext : DbContext
         );
 
         modelBuilder.Entity<Appointment>().HasData(
-            new Appointment { Id = 1, PatientId = 1, DoctorId = 1, Date = new DateTime(2024, 10, 1) }, // John Doe with Dr. Thomas
-            new Appointment { Id = 2, PatientId = 2, DoctorId = 2, Date = new DateTime(2024, 10, 2) }, // Jane Smith with Dr. Jerry
-            new Appointment { Id = 3, PatientId = 3, DoctorId = 3, Date = new DateTime(2024, 10, 3) }, // Alice Makeke with Dr. Boniface
-            new Appointment { Id = 4, PatientId = 4, DoctorId = 4, Date = new DateTime(2024, 10, 4) }  // Kuya Nacho with Dr. Olsen
+            new Appointment { Id = 1, PatientId = 1, DoctorId = 1, Date = new DateTime(2024, 10, 1) },
+            new Appointment { Id = 2, PatientId = 2, DoctorId = 2, Date = new DateTime(2024, 10, 2) },
+            new Appointment { Id = 3, PatientId = 3, DoctorId = 3, Date = new DateTime(2024, 10, 3) },
+            new Appointment { Id = 4, PatientId = 4, DoctorId = 4, Date = new DateTime(2024, 10, 4) }
         );
 
         modelBuilder.Entity<Prescription>().HasData(

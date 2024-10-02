@@ -1,4 +1,6 @@
-﻿namespace MedicalApp.Domain
+﻿using System.Text.Json.Serialization;
+
+namespace MedicalApp.Domain
 {
     public class Patient
     {
@@ -7,6 +9,6 @@
         public DateTime DateOfBirth { get; set; }
         public string Address { get; set; }
 
-        public ICollection<Appointment> Appointments { get; set; }
+        public virtual ICollection<Appointment> Appointments { get; set; }
     }
 }

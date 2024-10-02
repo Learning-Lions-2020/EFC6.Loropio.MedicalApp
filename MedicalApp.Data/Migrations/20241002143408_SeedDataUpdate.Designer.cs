@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicalApp.Data.Migrations
 {
     [DbContext(typeof(MedicalAppDbContext))]
-    [Migration("20241002115013_SeedDataUpdate")]
+    [Migration("20241002143408_SeedDataUpdate")]
     partial class SeedDataUpdate
     {
         /// <inheritdoc />

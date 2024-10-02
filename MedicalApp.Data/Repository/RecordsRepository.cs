@@ -18,6 +18,7 @@ namespace MedicalApp.Data.Repository
             _dbSet = context.Set<T>();
         }
 
+
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
@@ -50,11 +51,34 @@ namespace MedicalApp.Data.Repository
             }
         }
 
-        public async Task<List<Appointment>> GetAppointmentsForPatientAsync(int patientId)
+        public async Task<IEnumerable<Appointment>> GetAppointmentsWithDetailsAsync()
         {
             return await _context.Appointments
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Include(a => a.Prescription)
+                .ToListAsync();
+        }
+
+
+
+        public async Task<List<AppointmentDto>> GetAppointmentsForPatientAsync(int patientId)
+        {
+            return await _context.Appointments
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Include(a => a.Prescription)
                 .Where(a => a.PatientId == patientId)
-                .Include(a => a.Doctor) 
+                .Select(a => new AppointmentDto
+                {
+                    PatientId = a.PatientId,
+                    PatientName = a.Patient != null ? a.Patient.Name : "Unknown Patient", 
+                    DoctorId = a.DoctorId,
+                    DoctorName = a.Doctor != null ? a.Doctor.Name : "Unknown Doctor", 
+                    PrescriptionId = a.Prescription != null ? a.Prescription.Id : 0, 
+                    Medication = a.Prescription != null ? a.Prescription.Medication : "No Medication", 
+                    Dosage = a.Prescription != null ? a.Prescription.Dosage : "No Dosage" 
+                })
                 .ToListAsync();
         }
 

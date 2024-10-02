@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MedicalApp.Web.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/appointments")]
     public class AppointmentController : ControllerBase
     {
         private readonly IRecordsRepository<Appointment> _appointmentRepository;
@@ -22,9 +22,24 @@ namespace MedicalApp.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAppointments()
         {
-            var appointments = await _appointmentRepository.GetAllAsync();
-            return Ok(appointments);
+            var appointments = await _appointmentRepository.GetAppointmentsWithDetailsAsync();
+
+            // Map the appointments to AppointmentDto
+            var appointmentDtos = appointments.Select(a => new AppointmentDto
+            {
+                PatientId = a.PatientId,
+                PatientName = a.Patient != null ? a.Patient.Name : "Unknown Patient",
+                DoctorId = a.DoctorId,
+                DoctorName = a.Doctor != null ? a.Doctor.Name : "Unknown Doctor",
+                PrescriptionId = a.Prescription != null ? a.Prescription.Id : 0,
+                Medication = a.Prescription != null ? a.Prescription.Medication : "No Medication",
+                Dosage = a.Prescription != null ? a.Prescription.Dosage : "No Dosage"
+            }).ToList();
+
+            return Ok(appointmentDtos);
         }
+
+
 
         // GET: api/appointments/{id}
         [HttpGet("{id}")]
@@ -47,8 +62,6 @@ namespace MedicalApp.Web.Controllers
             await _appointmentRepository.AddAsync(appointment);
             return CreatedAtAction(nameof(GetAppointment), new { id = appointment.Id }, appointment);
         }
-
-
 
 
         // PUT: api/appointments/{id}
