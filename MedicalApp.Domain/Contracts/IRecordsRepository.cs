@@ -9,6 +9,7 @@ namespace MedicalApp.Domain.Contracts
         Task<T> GetByIdAsync(int id);        
         Task AddAsync(T entity);             
         Task UpdateAsync(T entity);          
-        Task DeleteAsync(int id);            
+        Task DeleteAsync(int id);
+        Task<List<Appointment>> GetAppointmentsForPatientAsync(int patientId);
     }
 }

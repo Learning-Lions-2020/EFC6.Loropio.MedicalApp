@@ -5,11 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddDbContext<MedicalAppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MedicalAppDbContext")));
 
-// Enable CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",
@@ -18,7 +16,6 @@ builder.Services.AddCors(options =>
                           .AllowAnyHeader());
 });
 
-// Add Razor Pages support
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 

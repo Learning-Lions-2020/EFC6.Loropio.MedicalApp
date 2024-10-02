@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MedicalApp.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class SeedDataUpdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,7 @@ namespace MedicalApp.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,7 +36,7 @@ namespace MedicalApp.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,8 +76,8 @@ namespace MedicalApp.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Medication = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Dosage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Medication = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Dosage = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AppointmentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -107,9 +107,9 @@ namespace MedicalApp.Data.Migrations
                 columns: new[] { "Id", "Address", "DateOfBirth", "Name" },
                 values: new object[,]
                 {
-                    { 1, "123 Main St", new DateTime(1993, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "John Doe" },
-                    { 2, "456 Elm St", new DateTime(1995, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Jane Smith" },
-                    { 3, "789 Pine St", new DateTime(1996, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Alice Makeke" },
+                    { 1, "123 Kalokol", new DateTime(1993, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Brizan Were" },
+                    { 2, "456 Arizona", new DateTime(1995, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "June Helderly" },
+                    { 3, "Bujumbura Tw", new DateTime(1996, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Alice Makeke" },
                     { 4, "Kanamkemer Str", new DateTime(1992, 3, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Kuya Nacho" }
                 });
 
@@ -118,10 +118,10 @@ namespace MedicalApp.Data.Migrations
                 columns: new[] { "Id", "Date", "DoctorId", "PatientId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 9, 30, 16, 35, 55, 634, DateTimeKind.Local).AddTicks(4212), 1, 1 },
-                    { 2, new DateTime(2024, 10, 1, 16, 35, 55, 634, DateTimeKind.Local).AddTicks(4224), 2, 2 },
-                    { 3, new DateTime(2024, 10, 2, 16, 35, 55, 634, DateTimeKind.Local).AddTicks(4227), 3, 3 },
-                    { 4, new DateTime(2024, 10, 3, 16, 35, 55, 634, DateTimeKind.Local).AddTicks(4229), 4, 4 }
+                    { 1, new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 2, new DateTime(2024, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 2 },
+                    { 3, new DateTime(2024, 10, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, 3 },
+                    { 4, new DateTime(2024, 10, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 4 }
                 });
 
             migrationBuilder.InsertData(

@@ -50,28 +50,28 @@ namespace MedicalApp.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2024, 9, 30, 16, 35, 55, 634, DateTimeKind.Local).AddTicks(4212),
+                            Date = new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DoctorId = 1,
                             PatientId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Date = new DateTime(2024, 10, 1, 16, 35, 55, 634, DateTimeKind.Local).AddTicks(4224),
+                            Date = new DateTime(2024, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DoctorId = 2,
                             PatientId = 2
                         },
                         new
                         {
                             Id = 3,
-                            Date = new DateTime(2024, 10, 2, 16, 35, 55, 634, DateTimeKind.Local).AddTicks(4227),
+                            Date = new DateTime(2024, 10, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DoctorId = 3,
                             PatientId = 3
                         },
                         new
                         {
                             Id = 4,
-                            Date = new DateTime(2024, 10, 3, 16, 35, 55, 634, DateTimeKind.Local).AddTicks(4229),
+                            Date = new DateTime(2024, 10, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DoctorId = 4,
                             PatientId = 4
                         });
@@ -86,6 +86,7 @@ namespace MedicalApp.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -139,6 +140,7 @@ namespace MedicalApp.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -156,21 +158,21 @@ namespace MedicalApp.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "123 Main St",
+                            Address = "123 Kalokol",
                             DateOfBirth = new DateTime(1993, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "John Doe"
+                            Name = "Brizan Were"
                         },
                         new
                         {
                             Id = 2,
-                            Address = "456 Elm St",
+                            Address = "456 Arizona",
                             DateOfBirth = new DateTime(1995, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Jane Smith"
+                            Name = "June Helderly"
                         },
                         new
                         {
                             Id = 3,
-                            Address = "789 Pine St",
+                            Address = "Bujumbura Tw",
                             DateOfBirth = new DateTime(1996, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Alice Makeke"
                         },
@@ -195,9 +197,11 @@ namespace MedicalApp.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Dosage")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Medication")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

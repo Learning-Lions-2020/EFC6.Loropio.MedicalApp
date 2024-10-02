@@ -1,4 +1,6 @@
-﻿using MedicalApp.Domain.Contracts;
+﻿using MedicalApp.Domain;
+using MedicalApp.Domain.Contracts;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -46,6 +48,14 @@ namespace MedicalApp.Data.Repository
                 _dbSet.Remove(entity);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<Appointment>> GetAppointmentsForPatientAsync(int patientId)
+        {
+            return await _context.Appointments
+                .Where(a => a.PatientId == patientId)
+                .Include(a => a.Doctor) 
+                .ToListAsync();
         }
 
     }

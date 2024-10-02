@@ -17,6 +17,7 @@ namespace MedicalApp.Web.Controllers
             _appointmentRepository = appointmentRepository;
         }
 
+
         // GET: api/appointments
         [HttpGet]
         public async Task<IActionResult> GetAllAppointments()
@@ -36,24 +37,12 @@ namespace MedicalApp.Web.Controllers
 
         // POST: api/appointments
         [HttpPost]
-        public async Task<IActionResult> AddAppointment([FromBody] AppointmentDto appointmentDto)
+        public async Task<IActionResult> AddAppointment([FromBody] Appointment appointment)
         {
-            if (appointmentDto == null)
+            if (appointment == null)
             {
                 return BadRequest("Appointment data is null.");
             }
-
-            var appointment = new Appointment
-            {
-                Date = appointmentDto.Date,
-                PatientId = appointmentDto.PatientId,
-                DoctorId = appointmentDto.DoctorId,
-                Prescription = new Prescription
-                {
-                    Medication = appointmentDto.Prescription.Medication,
-                    Dosage = appointmentDto.Prescription.Dosage
-                }
-            };
 
             await _appointmentRepository.AddAsync(appointment);
             return CreatedAtAction(nameof(GetAppointment), new { id = appointment.Id }, appointment);
@@ -81,5 +70,19 @@ namespace MedicalApp.Web.Controllers
             await _appointmentRepository.DeleteAsync(id);
             return NoContent();
         }
+
+
+        // GET: api/patients/{patientId}/appointments
+        [HttpGet("patient/{patientId}/appointment")]
+        public async Task<IActionResult> GetAppointmentsForPatient(int patientId)
+        {
+            var appointments = await _appointmentRepository.GetAppointmentsForPatientAsync(patientId);
+            if (appointments == null || !appointments.Any())
+            {
+                return NotFound();
+            }
+            return Ok(appointments);
+        }
+
     }
 }
