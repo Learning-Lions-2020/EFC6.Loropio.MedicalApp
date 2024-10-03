@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicalApp.Data.Migrations
 {
     [DbContext(typeof(MedicalAppDbContext))]
-    [Migration("20241002143408_SeedDataUpdate")]
-    partial class SeedDataUpdate
+    [Migration("20241003120254_RevertedAppointmentsChanges")]
+    partial class RevertedAppointmentsChanges
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

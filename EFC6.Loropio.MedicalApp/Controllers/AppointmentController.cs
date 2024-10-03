@@ -86,7 +86,7 @@ namespace MedicalApp.Web.Controllers
 
 
         // GET: api/patients/{patientId}/appointments
-        [HttpGet("patient/{patientId}/appointment")]
+        [HttpGet("patients/{patientId}/appointments")]
         public async Task<IActionResult> GetAppointmentsForPatient(int patientId)
         {
             var appointments = await _appointmentRepository.GetAppointmentsForPatientAsync(patientId);

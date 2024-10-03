@@ -9,6 +9,6 @@ namespace MedicalApp.Domain
         public DateTime DateOfBirth { get; set; }
         public string Address { get; set; }
 
-        public virtual ICollection<Appointment> Appointments { get; set; }
+        public ICollection<Appointment> Appointments { get; set; }
     }
 }

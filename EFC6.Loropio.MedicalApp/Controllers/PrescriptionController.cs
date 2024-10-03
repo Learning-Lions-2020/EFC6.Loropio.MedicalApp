@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace MedicalApp.Web.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/prescriptions")]
     public class PrescriptionController : ControllerBase
     {
         private readonly IRecordsRepository<Prescription> _prescriptionRepository;
@@ -23,6 +23,7 @@ namespace MedicalApp.Web.Controllers
             var prescriptions = await _prescriptionRepository.GetAllAsync();
             return Ok(prescriptions);
         }
+
 
         // GET: api/prescriptions/{id}
         [HttpGet("{id}")]

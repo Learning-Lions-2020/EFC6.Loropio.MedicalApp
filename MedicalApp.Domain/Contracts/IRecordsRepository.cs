@@ -12,5 +12,10 @@ namespace MedicalApp.Domain.Contracts
         Task DeleteAsync(int id);
         Task<List<AppointmentDto>> GetAppointmentsForPatientAsync(int patientId);
         Task<IEnumerable<Appointment>> GetAppointmentsWithDetailsAsync();
+        Task<IEnumerable<Appointment>> GetAppointmentsForDoctorAsync(int doctorId);
+        Task<IEnumerable<Prescription>> GetPrescriptionsForPatientAsync(int patientId);
+        Task<IEnumerable<Doctor>> GetDoctorsVisitedByPatientAsync(int patientId);
+
+
     }
 }

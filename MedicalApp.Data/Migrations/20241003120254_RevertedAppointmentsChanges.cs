@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MedicalApp.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedDataUpdate : Migration
+    public partial class RevertedAppointmentsChanges : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

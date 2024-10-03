@@ -16,7 +16,7 @@ namespace MedicalApp.Data.Repository
         {
             _context = context;
             _dbSet = context.Set<T>();
-        }
+        } 
 
 
         public async Task<IEnumerable<T>> GetAllAsync()
@@ -51,6 +51,7 @@ namespace MedicalApp.Data.Repository
             }
         }
 
+
         public async Task<IEnumerable<Appointment>> GetAppointmentsWithDetailsAsync()
         {
             return await _context.Appointments
@@ -59,7 +60,6 @@ namespace MedicalApp.Data.Repository
                 .Include(a => a.Prescription)
                 .ToListAsync();
         }
-
 
 
         public async Task<List<AppointmentDto>> GetAppointmentsForPatientAsync(int patientId)
@@ -79,6 +79,42 @@ namespace MedicalApp.Data.Repository
                     Medication = a.Prescription != null ? a.Prescription.Medication : "No Medication", 
                     Dosage = a.Prescription != null ? a.Prescription.Dosage : "No Dosage" 
                 })
+                .ToListAsync();
+        }
+
+
+        public async Task<IEnumerable<Appointment>> GetAppointmentsForDoctorAsync(int doctorId)
+        {
+            return await _context.Appointments
+                .Include(a => a.Doctor)
+                .Where(a => a.DoctorId == doctorId)
+                .ToListAsync();
+        }
+
+
+        public async Task<IEnumerable<Prescription>> GetPrescriptionsForPatientAsync(int patientId)
+        {
+            return await _context.Prescriptions
+                .Where(p => p.Appointment.PatientId == patientId)
+                .ToListAsync();
+        }
+
+
+        public async Task<IEnumerable<Doctor>> GetDoctorsForPatientAsync(int patientId)
+        {
+            return await _context.Appointments
+                .Include(a => a.Doctor)
+                .Where(a => a.PatientId == patientId)
+                .Select(a => a.Doctor)
+                .Distinct()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Doctor>> GetDoctorsVisitedByPatientAsync(int patientId)
+        {
+            return await _context.Doctors
+                .Where(d => d.Appointments.Any(a => a.PatientId == patientId))
+                .Distinct()
                 .ToListAsync();
         }
 

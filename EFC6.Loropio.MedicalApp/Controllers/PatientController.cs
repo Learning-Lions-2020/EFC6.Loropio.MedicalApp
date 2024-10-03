@@ -1,12 +1,13 @@
 ﻿using MedicalApp.Domain;
 using MedicalApp.Domain.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace MedicalApp.Web.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/patients")]
     public class PatientController : ControllerBase
     {
         private readonly IRecordsRepository<Patient> _patientRepository;
@@ -22,6 +23,7 @@ namespace MedicalApp.Web.Controllers
             var patients = await _patientRepository.GetAllAsync();
             return Ok(patients);
         }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPatient(int id)
@@ -52,5 +54,20 @@ namespace MedicalApp.Web.Controllers
             await _patientRepository.DeleteAsync(id);
             return NoContent();
         }
+
+        [HttpGet("patient/{patientId}/prescriptions")]
+        public async Task<IActionResult> GetPrescriptionsForPatient(int patientId)
+        {
+            var prescriptions = await _patientRepository.GetPrescriptionsForPatientAsync(patientId);
+            return Ok(prescriptions);
+        }
+
+        [HttpGet("patient/{patientId}/doctors")]
+        public async Task<IActionResult> GetDoctorsVisitedByPatient(int patientId)
+        {
+            var doctors = await _patientRepository.GetDoctorsVisitedByPatientAsync(patientId);
+            return Ok(doctors);
+        }
+
     }
 }
