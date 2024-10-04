@@ -24,6 +24,11 @@ builder.Services.AddScoped<IRecordsRepository<Doctor>, RecordsRepository<Doctor>
 builder.Services.AddScoped<IRecordsRepository<Appointment>, RecordsRepository<Appointment>>();
 builder.Services.AddScoped<IRecordsRepository<Prescription>, RecordsRepository<Prescription>>();
 
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

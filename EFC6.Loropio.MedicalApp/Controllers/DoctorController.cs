@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace MedicalApp.Web.Controllers
 {
     [ApiController]
-    [Route("api/doctors")]
+    [Route("api/[controller]")]
     public class DoctorController : ControllerBase
     {
         private readonly IRecordsRepository<Doctor> _doctorRepository;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MedicalApp.Web.Controllers
 {
     [ApiController]
-    [Route("api/appointments")]
+    [Route("api/[controller]")]
     public class AppointmentController : ControllerBase
     {
         private readonly IRecordsRepository<Appointment> _appointmentRepository;
@@ -85,11 +85,28 @@ namespace MedicalApp.Web.Controllers
         }
 
 
-        // GET: api/patients/{patientId}/appointments
-        [HttpGet("patients/{patientId}/appointments")]
+        [HttpGet("patients")]
+        public async Task<IActionResult> GetAllPatientsWithAppointments()
+        {
+            var appointments = await _appointmentRepository.GetAllPatientsWithAppointmentsAsync();
+            return Ok(appointments);
+        }
+
+        [HttpGet("patient/{patientId}")]
         public async Task<IActionResult> GetAppointmentsForPatient(int patientId)
         {
             var appointments = await _appointmentRepository.GetAppointmentsForPatientAsync(patientId);
+            if (appointments == null || !appointments.Any())
+            {
+                return NotFound();
+            }
+            return Ok(appointments);
+        }
+
+        [HttpGet("doctor/{doctorId}")]
+        public async Task<IActionResult> GetAppointmentsForDoctor(int doctorId)
+        {
+            var appointments = await _appointmentRepository.GetAppointmentsForDoctorAsync(doctorId);
             if (appointments == null || !appointments.Any())
             {
                 return NotFound();

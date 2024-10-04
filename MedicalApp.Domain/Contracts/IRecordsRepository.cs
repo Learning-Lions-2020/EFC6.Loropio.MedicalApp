@@ -10,6 +10,7 @@ namespace MedicalApp.Domain.Contracts
         Task AddAsync(T entity);             
         Task UpdateAsync(T entity);          
         Task DeleteAsync(int id);
+        Task<IEnumerable<AppointmentDto>> GetAllPatientsWithAppointmentsAsync();
         Task<List<AppointmentDto>> GetAppointmentsForPatientAsync(int patientId);
         Task<IEnumerable<Appointment>> GetAppointmentsWithDetailsAsync();
         Task<IEnumerable<Appointment>> GetAppointmentsForDoctorAsync(int doctorId);

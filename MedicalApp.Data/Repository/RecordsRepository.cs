@@ -51,6 +51,19 @@ namespace MedicalApp.Data.Repository
             }
         }
 
+        public async Task<IEnumerable<AppointmentDto>> GetAllPatientsWithAppointmentsAsync()
+        {
+            return await _context.Appointments
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Select(a => new AppointmentDto
+                {
+                    PatientName = a.Patient != null ? a.Patient.Name : "Unknown Patient",
+                    AppointmentDate = a.Date,
+                    DoctorName = a.Doctor != null ? a.Doctor.Name : "Unknown Doctor"
+                })
+                .ToListAsync();
+        }
 
         public async Task<IEnumerable<Appointment>> GetAppointmentsWithDetailsAsync()
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace MedicalApp.Web.Controllers
 {
     [ApiController]
-    [Route("api/prescriptions")]
+    [Route("api/[controller]")]
     public class PrescriptionController : ControllerBase
     {
         private readonly IRecordsRepository<Prescription> _prescriptionRepository;
@@ -65,6 +65,18 @@ namespace MedicalApp.Web.Controllers
 
             await _prescriptionRepository.DeleteAsync(id);
             return NoContent();
+        }
+
+
+        [HttpGet("patient/{patientId}")]
+        public async Task<IActionResult> GetPrescriptionsForPatient(int patientId)
+        {
+            var prescriptions = await _prescriptionRepository.GetPrescriptionsForPatientAsync(patientId);
+            if (prescriptions == null || !prescriptions.Any())
+            {
+                return NotFound();
+            }
+            return Ok(prescriptions);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MedicalApp.Domain;
+﻿using MedicalApp.Data.Repository;
+using MedicalApp.Domain;
 using MedicalApp.Domain.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,14 +8,17 @@ using System.Threading.Tasks;
 namespace MedicalApp.Web.Controllers
 {
     [ApiController]
-    [Route("api/patients")]
+    [Route("api/[controller]")]
     public class PatientController : ControllerBase
     {
         private readonly IRecordsRepository<Patient> _patientRepository;
+        private readonly IRecordsRepository<Appointment> _appointmentRepository;
 
-        public PatientController(IRecordsRepository<Patient> patientRepository)
+
+        public PatientController(IRecordsRepository<Patient> patientRepository, IRecordsRepository<Appointment> appointmentRepository)
         {
             _patientRepository = patientRepository;
+            _appointmentRepository = appointmentRepository;
         }
 
         [HttpGet]
@@ -55,18 +59,43 @@ namespace MedicalApp.Web.Controllers
             return NoContent();
         }
 
+        // GET: api/appointments/patients
+        [HttpGet("patients")]
+        public async Task<IActionResult> GetAllPatientsWithAppointments()
+        {
+            var appointments = await _appointmentRepository.GetAllPatientsWithAppointmentsAsync();
+            return Ok(appointments);
+        }
+
+        [HttpGet("{id}/appointments")]
+        public async Task<IActionResult> GetAppointmentsForPatient(int id)
+        {
+            var appointments = await _patientRepository.GetAppointmentsForPatientAsync(id);
+            if (appointments == null)
+            {
+                return NotFound();
+            }
+            return Ok(appointments);
+        }
+
+        [HttpGet("{id}/doctors")]
+        public async Task<IActionResult> GetDoctorsVisitedByPatient(int id)
+        {
+            var doctors = await _patientRepository.GetDoctorsVisitedByPatientAsync(id);
+            if (doctors == null)
+            {
+                return NotFound();
+            }
+            return Ok(doctors);
+        }
+
+
+
         [HttpGet("patient/{patientId}/prescriptions")]
         public async Task<IActionResult> GetPrescriptionsForPatient(int patientId)
         {
             var prescriptions = await _patientRepository.GetPrescriptionsForPatientAsync(patientId);
             return Ok(prescriptions);
-        }
-
-        [HttpGet("patient/{patientId}/doctors")]
-        public async Task<IActionResult> GetDoctorsVisitedByPatient(int patientId)
-        {
-            var doctors = await _patientRepository.GetDoctorsVisitedByPatientAsync(patientId);
-            return Ok(doctors);
         }
 
     }
